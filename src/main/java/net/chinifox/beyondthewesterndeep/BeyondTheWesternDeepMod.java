@@ -1,7 +1,11 @@
 package net.chinifox.beyondthewesterndeep;
 
 import com.mojang.logging.LogUtils;
+import net.chinifox.beyondthewesterndeep.block.ModBlocks;
+import net.chinifox.beyondthewesterndeep.item.ModCreativeModTabs;
+import net.chinifox.beyondthewesterndeep.item.ModItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,6 +34,11 @@ public class BeyondTheWesternDeepMod
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModCreativeModTabs.register(modEventBus);
+
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -48,7 +57,10 @@ public class BeyondTheWesternDeepMod
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS)
+        {
+            event.accept(ModItems.SILVERCOIN);
+        }
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

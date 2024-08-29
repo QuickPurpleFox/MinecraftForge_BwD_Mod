@@ -2,9 +2,13 @@ package net.chinifox.beyondthewesterndeep;
 
 import com.mojang.logging.LogUtils;
 import net.chinifox.beyondthewesterndeep.block.ModBlocks;
+import net.chinifox.beyondthewesterndeep.entity.ModEntities;
+import net.chinifox.beyondthewesterndeep.entity.client.CanidRenderer;
 import net.chinifox.beyondthewesterndeep.item.ModCreativeModTabs;
 import net.chinifox.beyondthewesterndeep.item.ModItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -38,6 +42,7 @@ public class BeyondTheWesternDeepMod
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModEntities.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -71,8 +76,7 @@ public class BeyondTheWesternDeepMod
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+            EntityRenderers.register(ModEntities.CANID.get(), CanidRenderer::new);
         }
     }
 }
